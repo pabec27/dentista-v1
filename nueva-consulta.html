@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Nueva Consulta | Clínica Dental</title>
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    <style>
+        .form-step { display: none; }
+        .form-step.active { display: block; }
+        .required:after { content:" *"; color:red; }
+        .paciente-card { border:1px solid #e3e6f0; border-radius:6px; padding:12px; margin-bottom:10px; cursor:pointer; }
+        .paciente-card:hover, .paciente-card.selected { background:#e9ecef; border-color:#007bff; }
+    </style>
+</head>
+<body id="page-top">
+<div id="wrapper">
+    <!-- Sidebar (igual que en otros archivos) -->
+    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+            <div class="sidebar-brand-icon">
+                <i class="fas fa-tooth"></i>
+            </div>
+            <div class="sidebar-brand-text mx-3">Clínica Dental</div>
+        </a>
+        <hr class="sidebar-divider my-0">
+        <li class="nav-item"><a class="nav-link" href="index.html"><i class="fas fa-home"></i><span>Inicio</span></a></li>
+        <li class="nav-item"><a class="nav-link" href="agenda.html"><i class="fas fa-calendar-check"></i><span>Agenda de Citas</span></a></li>
+        <li class="nav-item"><a class="nav-link" href="pacientes.html"><i class="fas fa-users"></i><span>Pacientes</span></a></li>
+        <li class="nav-item"><a class="nav-link" href="consultas.html"><i class="fas fa-notes-medical"></i><span>Consultas</span></a></li>
+        <li class="nav-item active"><a class="nav-link" href="nueva-consulta.html"><i class="fas fa-user-plus"></i><span>Nueva Consulta</span></a></li>
+        <li class="nav-item"><a class="nav-link" href="reportes.html"><i class="fas fa-chart-bar"></i><span>Reportes</span></a></li>
+        <hr class="sidebar-divider d-none d-md-block">
+        <div class="text-center d-none d-md-inline"><button class="rounded-circle border-0" id="sidebarToggle"></button></div>
+    </ul>
+    <!-- End Sidebar -->
+
+    <div id="content-wrapper" class="d-flex flex-column">
+        <div id="content">
+            <!-- Topbar -->
+            <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                <span class="navbar-brand mb-0 h1">Nueva Consulta</span>
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item dropdown no-arrow">
+                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="mr-2 d-none d-lg-inline text-gray-600 small">Usuario</span>
+                            <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                             aria-labelledby="userDropdown">
+                            <a class="dropdown-item" href="#">
+                                <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                Perfil
+                            </a>
+                            <a class="dropdown-item" href="#">
+                                <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                                Configuración
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="login.html">
+                                <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                Cerrar sesión
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+            <!-- End Topbar -->
+
+            <div class="container-fluid">
+                <h1 class="h3 mb-1 text-gray-800">Buscar paciente para nueva consulta</h1>
+                <p class="mb-4 text-muted">Busca y selecciona un paciente existente para registrar una nueva consulta. Si el paciente no existe, agrégalo desde la sección Pacientes.</p>
+                <!-- Buscador de pacientes -->
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3"><h6 class="m-0 font-weight-bold text-primary">Buscar paciente</h6></div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="busquedaPaciente" placeholder="Nombre, teléfono o ID de paciente">
+                        </div>
+                        <div id="resultadosBusqueda" class="mb-2"></div>
+                        <div id="avisoSeleccionaPaciente" class="text-danger" style="display:none;">Selecciona un paciente para continuar.</div>
+                        <button class="btn btn-primary" id="btnContinuar" disabled>Continuar con paciente seleccionado</button>
+                    </div>
+                </div>
+                <!-- Formulario multipaso (oculto hasta seleccionar paciente) -->
+                <div id="contenedorFormularioConsulta" style="display:none;">
+                    <form id="formNuevaConsulta" autocomplete="off">
+                        <!-- Paso 1: Datos personales (readonly o precargados) -->
+                        <div id="form1" class="form-step active">
+                            <h5>Datos personales del paciente</h5>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="required" for="nombre">Nombre completo</label>
+                                        <input type="text" class="form-control" id="nombre" readonly required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="required" for="fechaNacimiento">Fecha de nacimiento</label>
+                                        <input type="date" class="form-control" id="fechaNacimiento" readonly required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="required" for="domicilio">Domicilio</label>
+                                        <input type="text" class="form-control" id="domicilio" readonly required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="required" for="ciudad">Ciudad</label>
+                                        <input type="text" class="form-control" id="ciudad" readonly required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="required" for="ocupacion">Ocupación</label>
+                                        <input type="text" class="form-control" id="ocupacion" readonly required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="required" for="telefono">Teléfono</label>
+                                        <input type="text" class="form-control" id="telefono" readonly required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="required" for="estadoCivil">Estado Civil</label>
+                                        <input class="form-control" id="estadoCivil" readonly required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="required" for="contactoEmergencia">En caso de urgencia llamar a</label>
+                                        <input type="text" class="form-control" id="contactoEmergencia" readonly required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="required" for="telefonoEmergencia">Teléfono de emergencia</label>
+                                        <input type="text" class="form-control" id="telefonoEmergencia" readonly required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="required" for="motivoConsulta">Motivo de consulta</label>
+                                        <textarea class="form-control" id="motivoConsulta" rows="4" required></textarea>
+                                    </div>
+                                    <div class="d-flex justify-content-between">
+                                        <button type="button" class="btn btn-secondary" disabled>Anterior</button>
+                                        <button type="button" class="btn btn-primary" onclick="nextForm('form2')">Siguiente</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Paso 2: Antecedentes médicos (igual que en newconsult.html) -->
+                        <div id="form2" class="form-step">
+                            <h5>Antecedentes médicos</h5>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label><strong>Antecedentes personales patológicos</strong></label>
+                                    <div class="form-check"><input class="form-check-input" type="checkbox" id="cv"><label class="form-check-label" for="cv">Cardiovasculares</label></div>
+                                    <div class="form-check"><input class="form-check-input" type="checkbox" id="hta"><label class="form-check-label" for="hta">Hipertensión</label></div>
+                                    <div class="form-check"><input class="form-check-input" type="checkbox" id="angina"><label class="form-check-label" for="angina">Angina de pecho</label></div>
+                                    <div class="form-check"><input class="form-check-input" type="checkbox" id="infarto"><label class="form-check-label" for="infarto">Infartos/Arritmias</label></div>
+                                    <div class="form-check"><input class="form-check-input" type="checkbox" id="hep"><label class="form-check-label" for="hep">Hígado/Hepatitis</label></div>
+                                    <div class="form-check"><input class="form-check-input" type="checkbox" id="pulm"><label class="form-check-label" for="pulm">Pulmonares/Asma</label></div>
+                                    <div class="form-check"><input class="form-check-input" type="checkbox" id="gastro"><label class="form-check-label" for="gastro">Gastrointestinales</label></div>
+                                    <div class="form-check"><input class="form-check-input" type="checkbox" id="renal"><label class="form-check-label" for="renal">Renales</label></div>
+                                    <div class="form-check"><input class="form-check-input" type="checkbox" id="diab"><label class="form-check-label" for="diab">Diabetes</label></div>
+                                    <div class="form-group mt-3">
+                                        <label for="otrosMedicos">Otros problemas médicos</label>
+                                        <input type="text" class="form-control" id="otrosMedicos">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="medicamentosActuales">Medicamentos actuales</label>
+                                        <input type="text" class="form-control" id="medicamentosActuales">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="observaciones">Observaciones</label>
+                                        <input type="text" class="form-control" id="observaciones">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label><strong>Antecedentes familiares</strong></label>
+                                    <div class="form-group">
+                                        <label for="famDiabetes">Diabetes</label>
+                                        <input type="text" class="form-control" id="famDiabetes">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="famHipertension">Hipertensión</label>
+                                        <input type="text" class="form-control" id="famHipertension">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="famCancer">Cáncer</label>
+                                        <input type="text" class="form-control" id="famCancer">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="famEpilepsia">Epilepsia</label>
+                                        <input type="text" class="form-control" id="famEpilepsia">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="famOtra">Otras enfermedades</label>
+                                        <input type="text" class="form-control" id="famOtra">
+                                    </div>
+                                    <div class="d-flex justify-content-between">
+                                        <button type="button" class="btn btn-secondary" onclick="prevForm('form1')">Anterior</button>
+                                        <button type="button" class="btn btn-primary" onclick="nextForm('form3')">Siguiente</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Paso 3: Antecedentes odontológicos (igual que newconsult.html) -->
+                        <div id="form3" class="form-step">
+                            <h5>Antecedentes odontológicos</h5>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="higiene">Higiene (hilo dental, enjuague, etc.)</label>
+                                        <input type="text" class="form-control" id="higiene">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="habitos">Hábitos (tabaco, alcohol, etc.)</label>
+                                        <input type="text" class="form-control" id="habitos">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="alergias">Alergias</label>
+                                        <input type="text" class="form-control" id="alergias">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="fechaMenarca">Fecha de menarca (solo mujeres)</label>
+                                        <input type="date" class="form-control" id="fechaMenarca">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="ultimaMenstruacion">Última menstruación</label>
+                                        <input type="date" class="form-control" id="ultimaMenstruacion">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="embarazo">¿Está embarazada?</label>
+                                        <input type="text" class="form-control" id="embarazo">
+                                    </div>
+                                    <div class="d-flex justify-content-between">
+                                        <button type="button" class="btn btn-secondary" onclick="prevForm('form2')">Anterior</button>
+                                        <button type="button" class="btn btn-primary" onclick="nextForm('form4')">Siguiente</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Paso 4: Exploración y motivo actual (incluyendo campos nuevos) -->
+                        <div id="form4" class="form-step">
+                            <h5>Exploración y motivo actual</h5>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="dolor">¿Presenta dolor?</label>
+                                        <input type="text" class="form-control" id="dolor">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="gradoDolor">Grado de dolor (1 bajo - 10 fuerte)</label>
+                                        <input type="number" class="form-control" id="gradoDolor" min="1" max="10">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="inflamacion">¿Presenta inflamación?</label>
+                                        <input type="text" class="form-control" id="inflamacion">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="labiosCarrillos">Labios y carrillos</label>
+                                        <input type="text" class="form-control" id="labiosCarrillos">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="encia">Encía</label>
+                                        <input type="text" class="form-control" id="encia">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="paladar">Paladar duro y blando</label>
+                                        <input type="text" class="form-control" id="paladar">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="lengua">Lengua</label>
+                                        <input type="text" class="form-control" id="lengua">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="pisoBoca">Piso de boca</label>
+                                        <input type="text" class="form-control" id="pisoBoca">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="atmMusculos">ATM y músculos</label>
+                                        <input type="text" class="form-control" id="atmMusculos">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="oclusion">Oclusión</label>
+                                        <input type="text" class="form-control" id="oclusion">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="medicamentosDolor">¿Qué medicamentos ha tomado?</label>
+                                        <input type="text" class="form-control" id="medicamentosDolor">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="observacionExploracion">Observaciones</label>
+                                        <textarea class="form-control" id="observacionExploracion" rows="4"></textarea>
+                                    </div>
+                                    <div class="d-flex justify-content-between">
+                                        <button type="button" class="btn btn-secondary" onclick="prevForm('form3')">Anterior</button>
+                                        <button type="submit" class="btn btn-success">Registrar Consulta</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <!-- End multipaso -->
+            </div>
+        </div>
+        <!-- End Content -->
+
+        <!-- Footer -->
+        <footer class="sticky-footer bg-white">
+            <div class="container my-auto">
+                <div class="copyright text-center my-auto">
+                    <span>Copyright &copy; Clínica Dental 2025</span>
+                </div>
+            </div>
+        </footer>
+    </div>
+    <!-- End Content Wrapper -->
+</div>
+<!-- End Page Wrapper -->
+
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>
+
+<!-- JS Bootstrap y plugins -->
+<script src="vendor/jquery/jquery.min.js"></script>
+<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="js/sb-admin-2.min.js"></script>
+<script>
+    // Simulación de pacientes (debería cargar de tu backend)
+    const pacientes = [
+        {
+            id: 1,
+            nombre: "Juan Pérez",
+            fechaNacimiento: "1990-03-15",
+            domicilio: "Calle 1 #123",
+            ciudad: "Puebla",
+            ocupacion: "Ingeniero",
+            telefono: "2223344556",
+            estadoCivil: "Soltero(a)",
+            contactoEmergencia: "Ana Pérez",
+            telefonoEmergencia: "2229988776"
+        },
+        {
+            id: 2,
+            nombre: "Ana Gómez",
+            fechaNacimiento: "1985-09-27",
+            domicilio: "Av. Reforma 45",
+            ciudad: "Puebla",
+            ocupacion: "Contadora",
+            telefono: "2224455667",
+            estadoCivil: "Casado(a)",
+            contactoEmergencia: "Luis Gómez",
+            telefonoEmergencia: "2221234567"
+        }
+        // ... más pacientes
+    ];
+
+    // Buscador de pacientes
+    document.getElementById('busquedaPaciente').addEventListener('input', function() {
+        const query = this.value.trim().toLowerCase();
+        const resultados = pacientes.filter(p =>
+            p.nombre.toLowerCase().includes(query) ||
+            p.telefono.includes(query) ||
+            String(p.id) === query
+        );
+        mostrarResultados(resultados);
+    });
+
+    function mostrarResultados(resultados) {
+        const cont = document.getElementById('resultadosBusqueda');
+        cont.innerHTML = "";
+        if (resultados.length === 0 && document.getElementById('busquedaPaciente').value.trim() !== "") {
+            cont.innerHTML = "<div class='text-danger'>No se encontró ningún paciente.</div>";
+            document.getElementById('btnContinuar').disabled = true;
+            return;
+        }
+        resultados.forEach(p => {
+            const div = document.createElement('div');
+            div.className = "paciente-card";
+            div.innerHTML = `<strong>${p.nombre}</strong> <span class="text-secondary">(${p.ciudad})</span><br>
+                <span><i class="fas fa-phone"></i> ${p.telefono}</span>`;
+            div.onclick = function() {
+                seleccionarPaciente(p.id);
+                // Resalta seleccionado
+                document.querySelectorAll('.paciente-card').forEach(card => card.classList.remove('selected'));
+                div.classList.add('selected');
+            };
+            cont.appendChild(div);
+        });
+        document.getElementById('btnContinuar').disabled = true;
+    }
+
+    let pacienteSeleccionado = null;
+    function seleccionarPaciente(id) {
+        pacienteSeleccionado = pacientes.find(p => p.id === id);
+        document.getElementById('btnContinuar').disabled = false;
+        document.getElementById('avisoSeleccionaPaciente').style.display = "none";
+    }
+
+    document.getElementById('btnContinuar').onclick = function() {
+        if (!pacienteSeleccionado) {
+            document.getElementById('avisoSeleccionaPaciente').style.display = "block";
+            return;
+        }
+        // Precarga datos del paciente
+        document.getElementById('nombre').value = pacienteSeleccionado.nombre;
+        document.getElementById('fechaNacimiento').value = pacienteSeleccionado.fechaNacimiento;
+        document.getElementById('domicilio').value = pacienteSeleccionado.domicilio;
+        document.getElementById('ciudad').value = pacienteSeleccionado.ciudad;
+        document.getElementById('ocupacion').value = pacienteSeleccionado.ocupacion;
+        document.getElementById('telefono').value = pacienteSeleccionado.telefono;
+        document.getElementById('estadoCivil').value = pacienteSeleccionado.estadoCivil;
+        document.getElementById('contactoEmergencia').value = pacienteSeleccionado.contactoEmergencia;
+        document.getElementById('telefonoEmergencia').value = pacienteSeleccionado.telefonoEmergencia;
+        // Muestra formulario multipaso
+        document.getElementById('contenedorFormularioConsulta').style.display = "block";
+        window.scrollTo({top: document.getElementById('contenedorFormularioConsulta').offsetTop, behavior: "smooth"});
+    };
+
+    // Navegación multipaso
+    function nextForm(next) {
+        document.querySelectorAll('.form-step').forEach(f => f.classList.remove('active'));
+        document.getElementById(next).classList.add('active');
+    }
+    function prevForm(prev) {
+        document.querySelectorAll('.form-step').forEach(f => f.classList.remove('active'));
+        document.getElementById(prev).classList.add('active');
+    }
+
+    // Validación de motivo de consulta y envío
+    document.getElementById('formNuevaConsulta').addEventListener('submit', function(e){
+        // Simple validación de motivo de consulta
+        if(document.getElementById('motivoConsulta').value.trim() === ""){
+            alert("El motivo de consulta es obligatorio.");
+            document.getElementById('motivoConsulta').focus();
+            e.preventDefault();
+            return false;
+        }
+        // Simulación de guardado exitoso
+        alert('¡Consulta registrada correctamente para ' + pacienteSeleccionado.nombre + '!');
+        // Aquí puedes redirigir, limpiar, etc.
+        e.preventDefault();
+        return false;
+    });
+</script>
+</body>
+</html>

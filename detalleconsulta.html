@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Detalle de Consulta | Clínica Dental</title>
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    <style>
+        .readonly input,
+        .readonly textarea {
+            background: #f8f9fc;
+            border: none;
+            pointer-events: none;
+        }
+        #previewImagenes img {
+            width: 120px;
+            margin-right: 10px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body id="page-top">
+    <div id="wrapper">
+        <!-- Sidebar -->
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+                <div class="sidebar-brand-icon">
+                    <i class="fas fa-tooth"></i>
+                </div>
+                <div class="sidebar-brand-text mx-3">Clínica Dental</div>
+            </a>
+            <hr class="sidebar-divider my-0">
+            <li class="nav-item">
+                <a class="nav-link" href="index.html">
+                    <i class="fas fa-home"></i>
+                    <span>Inicio</span>
+                </a>
+            </li>
+			<li class="nav-item">
+				<a class="nav-link" href="newconsult.html">
+					<i class="fas fa-user-plus"></i>
+					<span>Primer Consulta</span>
+				</a>
+			</li>
+            <li class="nav-item">
+                <a class="nav-link" href="agenda.html">
+                    <i class="fas fa-calendar-check"></i>
+                    <span>Agenda de Citas</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="pacientes.html">
+                    <i class="fas fa-users"></i>
+                    <span>Pacientes</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="consultas.html">
+                    <i class="fas fa-notes-medical"></i>
+                    <span>Consultas</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="reportes.html">
+                    <i class="fas fa-chart-bar"></i>
+                    <span>Reportes</span>
+                </a>
+            </li>
+            <hr class="sidebar-divider d-none d-md-block">
+            <div class="text-center d-none d-md-inline">
+                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+            </div>
+        </ul>
+        <!-- End Sidebar -->
+
+        <div id="content-wrapper" class="d-flex flex-column">
+            <div id="content">
+                <!-- Topbar -->
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                    <span class="navbar-brand mb-0 h1">Detalle de Consulta</span>
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Usuario</span>
+                                <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                 aria-labelledby="userDropdown">
+                                <a class="dropdown-item" href="#">
+                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Perfil
+                                </a>
+                                <a class="dropdown-item" href="#">
+                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Configuración
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="login.html">
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Cerrar sesión
+                                </a>
+                            </div>
+                        </li>
+                    </ul>
+                </nav>
+                <!-- End Topbar -->
+
+                <div class="container-fluid">
+                    <a href="historia.html?paciente=juanperez" class="btn btn-secondary btn-sm mb-3">
+                        <i class="fas fa-arrow-left"></i> Volver al historial
+                    </a>
+                    <form id="detalleConsultaForm" class="readonly" enctype="multipart/form-data" autocomplete="off">
+                        <div class="card mb-4">
+                            <div class="card-header bg-primary text-white">
+                                <h5 class="mb-0">Consulta del 
+                                    <input type="date" class="form-control d-inline w-auto" value="2025-07-07" id="fechaConsulta" readonly required>
+                                </h5>
+                            </div>
+                            <div class="card-body row">
+                                <div class="col-md-6">
+                                    <div class="mb-2">
+                                        <strong>Paciente:</strong>
+                                        <input type="text" class="form-control" value="Juan Pérez" id="paciente" readonly required>
+                                    </div>
+                                    <div class="mb-2">
+                                        <strong>Edad:</strong>
+                                        <input type="number" class="form-control" value="34" id="edad" readonly min="0" max="120" required>
+                                    </div>
+                                    <div class="mb-2">
+                                        <strong>Teléfono:</strong>
+                                        <input type="text" class="form-control" value="2223344556" id="telefono" pattern="[0-9]{10}" maxlength="10" required readonly>
+                                        <small id="telefonoHelp" class="form-text text-danger d-none">Ingrese un teléfono válido de 10 dígitos.</small>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-2">
+                                        <strong>Doctor(a):</strong>
+                                        <input type="text" class="form-control" value="Dra. López" id="doctor" readonly required>
+                                    </div>
+                                    <div class="mb-2">
+                                        <strong>Motivo de consulta:</strong>
+                                        <input type="text" class="form-control" value="Dolor de muela" id="motivo" readonly required>
+                                    </div>
+                                    <div class="mb-2">
+                                        <strong>Diagnóstico:</strong>
+                                        <input type="text" class="form-control" value="Caries profunda" id="diagnostico" readonly required>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Detalles clínicos -->
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <h6 class="m-0 font-weight-bold text-primary">Detalles clínicos</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="mb-2">
+                                    <label><strong>Tratamiento realizado:</strong></label>
+                                    <input type="text" class="form-control" value="Extracción" id="tratamiento" readonly required>
+                                </div>
+                                <div class="mb-2">
+                                    <label><strong>Medicamentos prescritos:</strong></label>
+                                    <input type="text" class="form-control" value="Ibuprofeno 400mg cada 8h por 3 días" id="medicamentos" readonly>
+                                </div>
+                                <div class="mb-2">
+                                    <label><strong>Notas adicionales:</strong></label>
+                                    <textarea class="form-control" rows="3" id="notas" readonly required>Paciente respondió bien al tratamiento. Se recomienda revisión en 15 días.</textarea>
+                                </div>
+                                <div id="accionesEdicion" class="mt-3">
+                                    <button type="button" class="btn btn-warning" id="btnEditar" onclick="cambiarModoEdicion(true)">
+                                        <i class="fas fa-edit"></i> Editar
+                                    </button>
+                                    <button type="submit" class="btn btn-success d-none" id="btnGuardar">
+                                        <i class="fas fa-save"></i> Guardar
+                                    </button>
+                                    <button type="button" class="btn btn-secondary d-none" id="btnCancelar" onclick="cambiarModoEdicion(false)">
+                                        <i class="fas fa-times"></i> Cancelar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Sección imágenes -->
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <h6 class="m-0 font-weight-bold text-primary">Radiografías / Imágenes</h6>
+                            </div>
+                            <div class="card-body">
+                                <input type="file" id="imagenesConsulta" accept="image/*" multiple disabled>
+                                <div id="previewImagenes" class="mt-3"></div>
+                            </div>
+                        </div>
+
+                        <!-- Sección historial de cambios -->
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <h6 class="m-0 font-weight-bold text-primary">Historial de cambios</h6>
+                            </div>
+                            <div class="card-body">
+                                <table class="table table-sm">
+                                    <thead>
+                                        <tr>
+                                            <th>Fecha</th>
+                                            <th>Campo</th>
+                                            <th>Valor anterior</th>
+                                            <th>Valor nuevo</th>
+                                            <th>Usuario</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tablaHistorial">
+                                        <!-- Llenar dinámicamente -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <!-- End container-fluid -->
+            </div>
+            <!-- End Content -->
+
+            <!-- Footer -->
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright &copy; Clínica Dental 2025</span>
+                    </div>
+                </div>
+            </footer>
+            <!-- End Footer -->
+        </div>
+        <!-- End Content Wrapper -->
+    </div>
+    <!-- End Page Wrapper -->
+
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- JS Bootstrap y plugins -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="js/sb-admin-2.min.js"></script>
+    <script>
+        let valoresOriginales = {};
+        let imagenesCargadas = [];
+
+        function cambiarModoEdicion(editar) {
+            const form = document.getElementById('detalleConsultaForm');
+            const inputs = form.querySelectorAll('input, textarea');
+            const btnEditar = document.getElementById('btnEditar');
+            const btnGuardar = document.getElementById('btnGuardar');
+            const btnCancelar = document.getElementById('btnCancelar');
+            const fileInput = document.getElementById('imagenesConsulta');
+
+            if (editar) {
+                form.classList.remove('readonly');
+                inputs.forEach(i => { i.removeAttribute('readonly'); i.style.background = "#fff"; i.style.border = ""; });
+                fileInput.removeAttribute('disabled');
+                btnEditar.classList.add('d-none');
+                btnGuardar.classList.remove('d-none');
+                btnCancelar.classList.remove('d-none');
+                // Guarda valores originales para cancelar
+                valoresOriginales = {};
+                inputs.forEach(i => valoresOriginales[i.id] = i.value);
+            } else {
+                form.classList.add('readonly');
+                inputs.forEach(i => { i.setAttribute('readonly', 'readonly'); i.style.background = ""; i.style.border = ""; });
+                fileInput.setAttribute('disabled', 'disabled');
+                btnEditar.classList.remove('d-none');
+                btnGuardar.classList.add('d-none');
+                btnCancelar.classList.add('d-none');
+                // Restaura valores originales si cancela
+                inputs.forEach(i => {
+                    if (valoresOriginales[i.id] !== undefined) i.value = valoresOriginales[i.id];
+                });
+            }
+        }
+
+        // Validación de teléfono y formulario
+        document.getElementById('detalleConsultaForm').addEventListener('submit', function(e){
+            const tel = document.getElementById('telefono');
+            const telHelp = document.getElementById('telefonoHelp');
+            if (!/^\d{10}$/.test(tel.value)) {
+                e.preventDefault();
+                telHelp.classList.remove('d-none');
+                tel.classList.add('is-invalid');
+                tel.focus();
+                return false;
+            } else {
+                telHelp.classList.add('d-none');
+                tel.classList.remove('is-invalid');
+            }
+
+            // Simulación de guardar cambios y registrar historial
+            const cambios = [];
+            for (let key in valoresOriginales) {
+                let input = document.getElementById(key);
+                if (input && input.value !== valoresOriginales[key]) {
+                    cambios.push({
+                        fecha: new Date().toISOString().replace('T', ' ').substring(0, 16),
+                        campo: key.charAt(0).toUpperCase() + key.slice(1),
+                        anterior: valoresOriginales[key],
+                        nuevo: input.value,
+                        usuario: "pabec27"
+                    });
+                }
+            }
+            agregarCambiosHistorial(cambios);
+
+            // Simula "guardar en backend"
+            alert('¡Cambios guardados correctamente!');
+
+            cambiarModoEdicion(false);
+            e.preventDefault();
+            return false;
+        });
+
+        function agregarCambiosHistorial(cambios) {
+            const tabla = document.getElementById('tablaHistorial');
+            cambios.forEach(c => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `<td>${c.fecha}</td><td>${c.campo}</td><td>${c.anterior}</td><td>${c.nuevo}</td><td>${c.usuario}</td>`;
+                tabla.prepend(tr);
+            });
+        }
+
+        // Vista previa de imágenes
+        document.getElementById('imagenesConsulta').addEventListener('change', function(e) {
+            const preview = document.getElementById('previewImagenes');
+            preview.innerHTML = '';
+            imagenesCargadas = [];
+            Array.from(e.target.files).forEach(file => {
+                const reader = new FileReader();
+                reader.onload = function(evt) {
+                    const img = document.createElement('img');
+                    img.src = evt.target.result;
+                    preview.appendChild(img);
+                    imagenesCargadas.push(evt.target.result);
+                };
+                reader.readAsDataURL(file);
+            });
+        });
+
+        // Simulación de historial de cambios inicial
+        const cambiosIniciales = [
+            {fecha: '2025-07-07 10:23', campo: 'Diagnóstico', anterior: 'Caries', nuevo: 'Caries profunda', usuario: 'pabec27'},
+            {fecha: '2025-07-06 18:04', campo: 'Tratamiento', anterior: 'Ninguno', nuevo: 'Extracción', usuario: 'pabec27'}
+        ];
+        const tabla = document.getElementById('tablaHistorial');
+        cambiosIniciales.forEach(c => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `<td>${c.fecha}</td><td>${c.campo}</td><td>${c.anterior}</td><td>${c.nuevo}</td><td>${c.usuario}</td>`;
+            tabla.appendChild(tr);
+        });
+    </script>
+</body>
+</html>

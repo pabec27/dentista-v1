@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Nueva Cita | Clínica Dental</title>
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    <style>
+        .required:after {
+            content:" *";
+            color:red;
+        }
+    </style>
+</head>
+<body id="page-top">
+    <div id="wrapper">
+        <!-- Sidebar -->
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+                <div class="sidebar-brand-icon">
+                    <i class="fas fa-tooth"></i>
+                </div>
+                <div class="sidebar-brand-text mx-3">Clínica Dental</div>
+            </a>
+            <hr class="sidebar-divider my-0">
+            <li class="nav-item">
+                <a class="nav-link" href="index.html">
+                    <i class="fas fa-home"></i>
+                    <span>Inicio</span>
+                </a>
+            </li>
+			<li class="nav-item">
+				<a class="nav-link" href="newconsult.html">
+					<i class="fas fa-user-plus"></i>
+					<span>Primer Consulta</span>
+				</a>
+			</li>
+            <li class="nav-item">
+                <a class="nav-link" href="agenda.html">
+                    <i class="fas fa-calendar-check"></i>
+                    <span>Agenda de Citas</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="pacientes.html">
+                    <i class="fas fa-users"></i>
+                    <span>Pacientes</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="consultas.html">
+                    <i class="fas fa-notes-medical"></i>
+                    <span>Consultas</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="reportes.html">
+                    <i class="fas fa-chart-bar"></i>
+                    <span>Reportes</span>
+                </a>
+            </li>
+            <hr class="sidebar-divider d-none d-md-block">
+            <div class="text-center d-none d-md-inline">
+                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+            </div>
+        </ul>
+        <!-- End Sidebar -->
+
+        <div id="content-wrapper" class="d-flex flex-column">
+            <div id="content">
+                <!-- Topbar -->
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                    <span class="navbar-brand mb-0 h1">Nueva Cita</span>
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Usuario</span>
+                                <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                 aria-labelledby="userDropdown">
+                                <a class="dropdown-item" href="#">
+                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Perfil
+                                </a>
+                                <a class="dropdown-item" href="#">
+                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Configuración
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="login.html">
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Cerrar sesión
+                                </a>
+                            </div>
+                        </li>
+                    </ul>
+                </nav>
+                <!-- End Topbar -->
+
+                <div class="container-fluid">
+                    <div class="card shadow mb-4 col-lg-8 offset-lg-2">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">Registrar nueva cita</h6>
+                        </div>
+                        <div class="card-body">
+                            <form id="formNuevaCita" autocomplete="off">
+                                <div class="form-group">
+                                    <label for="fecha" class="required">Fecha</label>
+                                    <input type="date" class="form-control" id="fecha" name="fecha" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="hora" class="required">Hora</label>
+                                    <input type="time" class="form-control" id="hora" name="hora" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="paciente" class="required">Paciente</label>
+                                    <input type="text" class="form-control" id="paciente" name="paciente" placeholder="Nombre completo" required>
+                                    <!-- Para integración real: usar un select con búsqueda de pacientes -->
+                                </div>
+                                <div class="form-group">
+                                    <label for="telefono" class="required">Teléfono</label>
+                                    <input type="text" class="form-control" id="telefono" name="telefono" placeholder="10 dígitos" maxlength="10" pattern="[0-9]{10}" required>
+                                    <small id="telefonoHelp" class="form-text text-danger d-none">Ingrese un teléfono válido de 10 dígitos.</small>
+                                </div>
+                                <div class="form-group">
+                                    <label for="motivo" class="required">Motivo de la consulta</label>
+                                    <textarea class="form-control" id="motivo" name="motivo" rows="2" required></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="doctor" class="required">Doctor(a) responsable</label>
+                                    <select class="form-control" id="doctor" name="doctor" required>
+                                        <option value="">Seleccione</option>
+                                        <option value="Dra. López">Dra. López</option>
+                                        <option value="Dr. Pérez">Dr. Pérez</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="estado">Estado de la cita</label>
+                                    <select class="form-control" id="estado" name="estado">
+                                        <option value="confirmada">Confirmada</option>
+                                        <option value="pendiente">Pendiente</option>
+                                        <option value="cancelada">Cancelada</option>
+                                    </select>
+                                </div>
+                                <div class="form-group d-flex justify-content-between">
+                                    <a href="agenda.html" class="btn btn-secondary">Cancelar</a>
+                                    <button type="submit" class="btn btn-primary">Guardar cita</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- End container-fluid -->
+            </div>
+            <!-- End Content -->
+
+            <!-- Footer -->
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright &copy; Clínica Dental 2025</span>
+                    </div>
+                </div>
+            </footer>
+            <!-- End Footer -->
+        </div>
+        <!-- End Content Wrapper -->
+    </div>
+    <!-- End Page Wrapper -->
+
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- JS Bootstrap y plugins -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="js/sb-admin-2.min.js"></script>
+    <script>
+        // Validación de teléfono
+        document.getElementById('formNuevaCita').addEventListener('submit', function(e){
+            const tel = document.getElementById('telefono');
+            const telHelp = document.getElementById('telefonoHelp');
+            if (!/^\d{10}$/.test(tel.value)) {
+                e.preventDefault();
+                telHelp.classList.remove('d-none');
+                tel.classList.add('is-invalid');
+                tel.focus();
+                return false;
+            } else {
+                telHelp.classList.add('d-none');
+                tel.classList.remove('is-invalid');
+            }
+            // Simulación de guardado exitoso
+            alert('¡Cita registrada correctamente!');
+            // Redirige a la agenda (puedes cambiarlo por tu propio proceso)
+            window.location.href = "agenda.html";
+            e.preventDefault();
+            return false;
+        });
+    </script>
+</body>
+</html>

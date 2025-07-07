@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Historial Clínico | Clínica Dental</title>
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+</head>
+<body id="page-top">
+    <div id="wrapper">
+        <!-- Sidebar -->
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+                <div class="sidebar-brand-icon">
+                    <i class="fas fa-tooth"></i>
+                </div>
+                <div class="sidebar-brand-text mx-3">Clínica Dental</div>
+            </a>
+            <hr class="sidebar-divider my-0">
+            <li class="nav-item">
+                <a class="nav-link" href="index.html">
+                    <i class="fas fa-home"></i>
+                    <span>Inicio</span>
+                </a>
+            </li>
+			<li class="nav-item">
+				<a class="nav-link" href="newconsult.html">
+					<i class="fas fa-user-plus"></i>
+					<span>Primer Consulta</span>
+				</a>
+			</li>
+            <li class="nav-item">
+                <a class="nav-link" href="agenda.html">
+                    <i class="fas fa-calendar-check"></i>
+                    <span>Agenda de Citas</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="pacientes.html">
+                    <i class="fas fa-users"></i>
+                    <span>Pacientes</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="consultas.html">
+                    <i class="fas fa-notes-medical"></i>
+                    <span>Consultas</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="reportes.html">
+                    <i class="fas fa-chart-bar"></i>
+                    <span>Reportes</span>
+                </a>
+            </li>
+            <hr class="sidebar-divider d-none d-md-block">
+            <div class="text-center d-none d-md-inline">
+                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+            </div>
+        </ul>
+        <!-- End Sidebar -->
+
+        <div id="content-wrapper" class="d-flex flex-column">
+            <div id="content">
+                <!-- Topbar -->
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                    <span class="navbar-brand mb-0 h1">Historial Clínico del Paciente</span>
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Usuario</span>
+                                <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                aria-labelledby="userDropdown">
+                                <a class="dropdown-item" href="#">
+                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Perfil
+                                </a>
+                                <a class="dropdown-item" href="#">
+                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Configuración
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="login.html">
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Cerrar sesión
+                                </a>
+                            </div>
+                        </li>
+                    </ul>
+                </nav>
+                <!-- End Topbar -->
+
+                <div class="container-fluid">
+                    <!-- Datos personales del paciente (puedes llenar dinámicamente) -->
+                    <div class="card mb-4">
+                        <div class="card-header bg-primary text-white">
+                            <h5 class="mb-0">Datos del Paciente</h5>
+                        </div>
+                        <div class="card-body row">
+                            <div class="col-md-4">
+                                <strong>Nombre completo:</strong> Juan Pérez<br>
+                                <strong>Edad:</strong> 34<br>
+                                <strong>Sexo:</strong> Masculino<br>
+                            </div>
+                            <div class="col-md-4">
+                                <strong>Teléfono:</strong> 2223344556<br>
+                                <strong>Domicilio:</strong> Calle Falsa 123<br>
+                                <strong>Ocupación:</strong> Ingeniero
+                            </div>
+                            <div class="col-md-4">
+                                <strong>Última consulta:</strong> 2025-07-07<br>
+                                <strong>Doctor(a):</strong> Dra. López<br>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Historial de consultas -->
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">Consultas realizadas</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>Fecha</th>
+                                            <th>Motivo</th>
+                                            <th>Diagnóstico</th>
+                                            <th>Tratamiento</th>
+                                            <th>Doctor(a)</th>
+                                            <th>Notas</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!-- Ejemplo de fila -->
+                                        <tr>
+                                            <td>2025-07-07</td>
+                                            <td>Dolor de muela</td>
+                                            <td>Caries profunda</td>
+                                            <td>Extracción</td>
+                                            <td>Dra. López</td>
+                                            <td>Paciente respondió bien al tratamiento.</td>
+                                            <td>
+                                                <a href="#" class="btn btn-sm btn-info" title="Ver Detalles"><i class="fas fa-eye"></i></a>
+                                            </td>
+                                        </tr>
+                                        <!-- Más filas aquí -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Botón para volver a la lista de pacientes -->
+                    <a href="pacientes.html" class="btn btn-secondary btn-sm">
+                        <i class="fas fa-arrow-left"></i> Volver a Pacientes
+                    </a>
+                </div>
+                <!-- End container-fluid -->
+            </div>
+            <!-- End Content -->
+
+            <!-- Footer -->
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright &copy; Clínica Dental 2025</span>
+                    </div>
+                </div>
+            </footer>
+            <!-- End Footer -->
+        </div>
+        <!-- End Content Wrapper -->
+    </div>
+    <!-- End Page Wrapper -->
+
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- JS Bootstrap y plugins -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="js/sb-admin-2.min.js"></script>
+</body>
+</html>

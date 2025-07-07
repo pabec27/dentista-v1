@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Reportes | Clínica Dental</title>
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    <style>
+        .card-header .btn {
+            float: right;
+        }
+    </style>
+</head>
+<body id="page-top">
+    <div id="wrapper">
+        <!-- Sidebar -->
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+                <div class="sidebar-brand-icon">
+                    <i class="fas fa-tooth"></i>
+                </div>
+                <div class="sidebar-brand-text mx-3">Clínica Dental</div>
+            </a>
+            <hr class="sidebar-divider my-0">
+            <li class="nav-item">
+                <a class="nav-link" href="index.html">
+                    <i class="fas fa-home"></i>
+                    <span>Inicio</span>
+                </a>
+            </li>
+			<li class="nav-item">
+				<a class="nav-link" href="newconsult.html">
+					<i class="fas fa-user-plus"></i>
+					<span>Primer Consulta</span>
+				</a>
+			</li>
+            <li class="nav-item">
+                <a class="nav-link" href="agenda.html">
+                    <i class="fas fa-calendar-check"></i>
+                    <span>Agenda de Citas</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="pacientes.html">
+                    <i class="fas fa-users"></i>
+                    <span>Pacientes</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="consultas.html">
+                    <i class="fas fa-notes-medical"></i>
+                    <span>Consultas</span>
+                </a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="reportes.html">
+                    <i class="fas fa-chart-bar"></i>
+                    <span>Reportes</span>
+                </a>
+            </li>
+            <hr class="sidebar-divider d-none d-md-block">
+            <div class="text-center d-none d-md-inline">
+                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+            </div>
+        </ul>
+        <!-- End Sidebar -->
+
+        <div id="content-wrapper" class="d-flex flex-column">
+            <div id="content">
+                <!-- Topbar -->
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                    <span class="navbar-brand mb-0 h1">Reportes</span>
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Usuario</span>
+                                <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                 aria-labelledby="userDropdown">
+                                <a class="dropdown-item" href="#">
+                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Perfil
+                                </a>
+                                <a class="dropdown-item" href="#">
+                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Configuración
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="login.html">
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Cerrar sesión
+                                </a>
+                            </div>
+                        </li>
+                    </ul>
+                </nav>
+                <!-- End Topbar -->
+
+                <div class="container-fluid">
+                    <h1 class="h3 mb-4 text-gray-800">Reportes y Estadísticas</h1>
+                    
+                    <!-- Filtros de reporte -->
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <i class="fas fa-filter"></i> Filtros de búsqueda
+                        </div>
+                        <div class="card-body">
+                            <form class="form-row" id="filtrosReporte">
+                                <div class="form-group col-md-3">
+                                    <label for="fechaInicio">Desde</label>
+                                    <input type="date" class="form-control" id="fechaInicio">
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label for="fechaFin">Hasta</label>
+                                    <input type="date" class="form-control" id="fechaFin">
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label for="doctor">Doctor(a)</label>
+                                    <select class="form-control" id="doctor">
+                                        <option value="">Todos</option>
+                                        <option value="Dra. López">Dra. López</option>
+                                        <option value="Dr. Pérez">Dr. Pérez</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-3 d-flex align-items-end">
+                                    <button type="button" class="btn btn-primary w-100" onclick="filtrarReportes()">
+                                        <i class="fas fa-search"></i> Filtrar
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- KPIs principales -->
+                    <div class="row mb-4">
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card border-left-primary shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Citas Totales</div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800" id="totalCitas">0</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card border-left-success shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Consultas Realizadas</div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800" id="totalConsultas">0</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card border-left-warning shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Pacientes Atendidos</div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800" id="totalPacientes">0</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card border-left-info shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Ingresos Aproximados</div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800" id="ingresosAprox">$0</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Gráfica de barras (Citas por semana) -->
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <i class="fas fa-chart-bar"></i> Citas por Semana
+                        </div>
+                        <div class="card-body">
+                            <canvas id="barChartCitas"></canvas>
+                        </div>
+                    </div>
+                    
+                    <!-- Tabla de reporte detallado -->
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <i class="fas fa-table"></i> Detalle de Consultas
+                            <button class="btn btn-outline-success btn-sm" onclick="exportarReporte()"><i class="fas fa-file-excel"></i> Exportar Excel</button>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="tablaReportes" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>Fecha</th>
+                                            <th>Hora</th>
+                                            <th>Paciente</th>
+                                            <th>Doctor(a)</th>
+                                            <th>Motivo</th>
+                                            <th>Estado</th>
+                                            <th>Ingreso</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!-- Rellenar dinámicamente -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+                <!-- End container-fluid -->
+            </div>
+            <!-- End Content -->
+
+            <!-- Footer -->
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright &copy; Clínica Dental 2025</span>
+                    </div>
+                </div>
+            </footer>
+            <!-- End Footer -->
+        </div>
+        <!-- End Content Wrapper -->
+    </div>
+    <!-- End Page Wrapper -->
+
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- JS Bootstrap y plugins -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="js/sb-admin-2.min.js"></script>
+    <!-- Chart.js para las gráficas -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Simulación de datos para reportes
+        const datosReporte = [
+            {fecha: "2025-07-01", hora: "09:00", paciente: "Juan Pérez", doctor: "Dra. López", motivo: "Dolor de muela", estado: "Realizada", ingreso: 500},
+            {fecha: "2025-07-01", hora: "10:00", paciente: "Ana Gómez", doctor: "Dr. Pérez", motivo: "Limpieza", estado: "Realizada", ingreso: 400},
+            {fecha: "2025-07-02", hora: "11:00", paciente: "Luis Torres", doctor: "Dra. López", motivo: "Extracción", estado: "Cancelada", ingreso: 0},
+            {fecha: "2025-07-03", hora: "12:00", paciente: "Marta Ruiz", doctor: "Dra. López", motivo: "Ortodoncia", estado: "Pendiente", ingreso: 0},
+            {fecha: "2025-07-04", hora: "09:30", paciente: "Andrés Salas", doctor: "Dr. Pérez", motivo: "Revisión", estado: "Realizada", ingreso: 300},
+        ];
+
+        // Inicializar tabla y KPIs en carga
+        function cargarReporte() {
+            let totalCitas = datosReporte.length;
+            let totalConsultas = datosReporte.filter(r => r.estado === "Realizada").length;
+            let pacientesSet = new Set(datosReporte.map(r => r.paciente));
+            let totalPacientes = pacientesSet.size;
+            let ingresos = datosReporte.reduce((sum, r) => sum + (r.ingreso || 0), 0);
+
+            document.getElementById('totalCitas').innerText = totalCitas;
+            document.getElementById('totalConsultas').innerText = totalConsultas;
+            document.getElementById('totalPacientes').innerText = totalPacientes;
+            document.getElementById('ingresosAprox').innerText = "$" + ingresos;
+
+            // Tabla
+            const tbody = document.querySelector("#tablaReportes tbody");
+            tbody.innerHTML = "";
+            datosReporte.forEach(r => {
+                const tr = document.createElement("tr");
+                tr.innerHTML = `<td>${r.fecha}</td><td>${r.hora}</td><td>${r.paciente}</td><td>${r.doctor}</td><td>${r.motivo}</td><td>${r.estado}</td><td>$${r.ingreso}</td>`;
+                tbody.appendChild(tr);
+            });
+
+            // Gráfica de barras
+            const labels = [];
+            const dataCitas = [];
+            let fechaIni = new Date("2025-07-01");
+            for (let i = 0; i < 7; i++) {
+                const fechaStr = fechaIni.toISOString().split("T")[0];
+                labels.push(fechaStr);
+                dataCitas.push(datosReporte.filter(r => r.fecha === fechaStr).length);
+                fechaIni.setDate(fechaIni.getDate() + 1);
+            }
+            const ctx = document.getElementById('barChartCitas').getContext('2d');
+            if(window.citasChart) window.citasChart.destroy();
+            window.citasChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Citas',
+                        backgroundColor: '#4e73df',
+                        borderColor: '#4e73df',
+                        data: dataCitas
+                    }]
+                },
+                options: {responsive: true, plugins:{legend:{display:false}}}
+            });
+        }
+        window.onload = cargarReporte;
+
+        // Filtros de reporte (solo simulado)
+        function filtrarReportes() {
+            alert("Funcionalidad de filtros sólo de demostración. Integra tu backend para filtrar realmente.");
+        }
+
+        // Exportar a Excel (simulado)
+        function exportarReporte() {
+            alert("Funcionalidad de exportación sólo de demostración. Integra tu backend para exportar realmente.");
+        }
+    </script>
+</body>
+</html>
